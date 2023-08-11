@@ -8,11 +8,7 @@ function App() {
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <img src={logo} alt="logo" />
-        <h1>Hirecoder - POC</h1>
-        <p>Hirecoder 1
-
-        </p>
-        
+        <h1>Hello world</h1>
         
       </header>
     </div>
