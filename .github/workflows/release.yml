@@ -7,19 +7,19 @@ on:
 
 jobs:
   release:
-    permissions:
-      contents: write
-      pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Get semantic version
-        id: semver
-        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
-      - uses: release-drafter/release-drafter@v5
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         with:
-          tag: ${{ github.event.inputs.version }}  # Use the correct input value here
-          name: Release ${{ steps.semver.outputs.version }}  # Use the correct step output here
-          version: ${{ steps.semver.outputs.version }}  # Use the correct step output here
-          publish: true
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: Auto-generated release for tag ${{ github.ref }}
+          draft: false
+          prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN secret here
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
