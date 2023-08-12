@@ -1,7 +1,7 @@
-name: Create Release Draft
+name: Release
 
 on:
-  create:
+  push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
@@ -12,16 +12,16 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag name
-        id: tagname
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+      - name: Get semantic version
+        id: semver
+        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
       
-      - name: Create Release Draft
+      - name: Create Release
         uses: release-drafter/release-drafter@v5
         with:
-          tag: ${{ steps.tagname.outputs.tag }}
-          name: Release ${{ steps.tagname.outputs.tag }}
-          version: ${{ steps.tagname.outputs.tag }}
-          publish: false  # Draft the release
+          tag: ${{ github.event.inputs.version }}  # Use the correct input value here
+          name: Release ${{ steps.semver.outputs.version }}  # Use the correct step output here
+          version: ${{ steps.semver.outputs.version }}  # Use the correct step output here
+          publish: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN secret here
