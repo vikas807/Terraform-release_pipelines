@@ -15,12 +15,11 @@ jobs:
       - name: Get semantic version
         id: semver
         run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
-      - name: Create Release Draft
-        uses: release-drafter/release-drafter@v5
+      - uses: release-drafter/release-drafter@v5
         with:
-          tag: ${{ steps.semver.outputs.version }}  # Use the correct step output here
-          name: Release ${{ steps.semver.outputs.version }}  # Use the correct step output here
-          version: ${{ steps.semver.outputs.version }}  # Use the correct step output here
-          publish: false  # Draft the release
+          tag: $
+          name: $
+          version: $
+          publish: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN secret here
+          GITHUB_TOKEN: $
